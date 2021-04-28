@@ -1,4 +1,3 @@
-# test
+# to do list app
 
-## to do list app
-### soon ... responsive with mobile
+## soon ... responsive with mobile
