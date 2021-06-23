@@ -11,8 +11,12 @@
             <searchTasks />
           </div>
           <div class="controls">
-            <div>
-              <button @click="settings" class="settings">Settings</button>
+            <div class="btn_darkmode">
+              <input @click="DarkMode" type="checkbox" id="darkmode" >
+              <label for="darkmode">
+                <img src="./icons/moon-style-1.svg">
+                <img src="./icons/sun-style-1.svg">
+              </label>
             </div>
             <button class="create-new">
               <img src="../src/icons/plus.svg">
@@ -36,15 +40,6 @@
             </li>
           </ul>
       </nav>
-      <div v-show="showHideSettings" class="settings-app">
-        <div class="features">
-        <button @click="closeSettings" class="close-settings">X</button>
-          <div class="dark-mode">
-            <label for="darkMode">Dark Mode</label>
-            <input type="checkbox" @click="DarkMode" id="darkMode">
-          </div>
-        </div>
-      </div>
       <router-view />
   </div>
 </template>
@@ -58,8 +53,7 @@ export default {
   data: function() {
     return {
       // toggle menu
-      menutog: false,
-      showHideSettings: false
+      menutog: false
     }
   },
   components: {
@@ -98,18 +92,25 @@ export default {
       //? if a user leave the input field opened, and not click on cancel and clicked on completed tasks page , this function will enable the create task button that in top
       document.querySelector(".create-new").disabled = false
     },
-    settings() {
-      this.showHideSettings = true
-    },
-    closeSettings() {
-      this.showHideSettings = false
-    },
     DarkMode(event) {
       if (event.target.checked) {
         document.body.classList.add("ActiveDartkMode");
+        localStorage.setItem("darkMode", JSON.stringify(true));
       } else {
         document.body.classList.remove("ActiveDartkMode");
+        localStorage.setItem("darkMode", JSON.stringify(false));
       }
+    },
+  },
+  mounted() {
+    let darkModeInLocalS = JSON.parse(localStorage.getItem("darkMode"));
+    let darkmode = document.querySelector("#darkmode");
+    if (darkModeInLocalS) {
+      document.body.classList.add("ActiveDartkMode");
+      darkmode.checked = true;
+    } else {
+      document.body.classList.remove("ActiveDartkMode");
+      darkmode.checked = false;
     }
   }
 }
