@@ -8,8 +8,16 @@
             <ul class="listOfTasks">
                 <img v-show="showTaskImage" class="tasks-hero-image" src="../icons/completed.jpg">
                 <li v-for="(taskComplete, index) in completedTask" :key="index" class="taskComplete">
-                    {{ taskComplete }}
-                    <button :data-delete="index" class="del" @click="deleteTask"> <img src="../icons/trash.svg"> </button>
+                    <div class="col-one-t">
+                        <span> {{ taskComplete.task }} </span>
+                    </div>
+                    <div class="col-tow-t">
+                        <div class="task-date">
+                            <span class="task-d"> {{ taskComplete.taskDate }} </span>
+                            <span class="task-end-date"> {{ taskComplete.taskEndDate }} </span>
+                        </div>
+                        <button :data-delete="index" class="del" @click="deleteTask"> <img src="../icons/trash.svg"> </button>
+                    </div>
                 </li> 
             </ul>
         </div>

@@ -15,12 +15,17 @@
             <ul class="listOfTasks">
               <img v-show="showTaskImage" class="tasks-hero-image" src="../icons/tasks.jpg">
                 <li v-for="(task, index) in tasks" :key="index" class="task">
-                    <label :data-complete="index" class="completedTask" @click="complete">
-                      <input type="radio" id="complete">
-                      <img :data-complete="index" src="../icons/check (1).svg" >
-                    </label>
-                    {{ task }}
-                    <button :data-delete="index" @click="deleteTask" class="del" > <img src="../icons/trash.svg"> </button>
+                    <div class="col-one-t">
+                        <label :data-complete="index" class="completedTask" @click="complete">
+                        <input type="radio" id="complete">
+                        <img :data-complete="index" src="../icons/check (1).svg" >
+                      </label>
+                      <span> {{ task.task }} </span>
+                    </div>
+                    <div class="col-tow-t">
+                      <span class="task-date"> {{ task.taskDate }} </span>
+                      <button :data-delete="index" @click="deleteTask" class="del" > <img src="../icons/trash.svg"> </button>
+                    </div>
                 </li> 
             </ul>
         </div>
@@ -59,7 +64,7 @@ export default {
               border: 1px solid rgb(195 195 195);
               border-radius: 5px;
               transition: all 10s ease;
-          `
+          `;
           // if controls_input existe
           if (controls_input) {
             controls_input.append(newTask);
@@ -111,9 +116,16 @@ export default {
           this.isthereTask = false;
           // hide the main add task button
           this.toggleAdd = true;
-          //? start localStorage
+          // get date
+          let mDate = new Date();
+          let tds = mDate.toDateString();
           // make array from input field value
-          this.tasks.push(val);
+          this.tasks.push({
+            task: val,
+            taskDate: tds
+          });
+
+            //? start localStorage
           // add the array of input field values to local storage
           localStorage.setItem("tasks", JSON.stringify(this.tasks));
           // hide the main image in inbox page
@@ -131,9 +143,19 @@ export default {
               // get the target index number of a task 
               indexTask = e.target.getAttribute("data-complete"),
               // get the target text of the task
-              textOfTask = listTasks[indexTask].textContent;
+              // textOfTask = listTasks[indexTask].textContent,
+              eleC1 = listTasks[indexTask].querySelector(".col-one-t"),
+              eleC2 = listTasks[indexTask].querySelector(".col-tow-t"),
+              taskD = eleC2.querySelector(".task-date").textContent,
+              taskT = eleC1.querySelector("span").textContent;
           // make array from task text
-          this.completed.push(textOfTask);
+          let tDate = new Date();
+          let taskDate = tDate.toDateString()
+          this.completed.push({
+            task: taskT,
+            taskDate: taskD,
+            taskEndDate: taskDate
+          });
           // add the array of the task text to local storage
           localStorage.setItem("completedTasks", JSON.stringify(this.completed));
           //? delete the target task from incomplete tasks that in local storage
