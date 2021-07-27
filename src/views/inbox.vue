@@ -81,6 +81,15 @@ export default {
             // if the value of input is empty, disable the save button else that enabling
             e.target.value === "" ? save_task.disabled = true :
             save_task.disabled = false;
+
+            if (e.target.value.length >= 60) {
+              save_task.disabled = true;
+              alert("You have exceeded the 60 character limit")
+            } else {
+              save_task.disabled = false;
+            }
+            console.log(e.target.value.length)
+
           })
           };
           // toggle between show / hide [button save task, button cancel task] if input field exists

@@ -13,8 +13,13 @@
                     </div>
                     <div class="col-tow-t">
                         <div class="task-date">
-                            <span class="task-d"> {{ taskComplete.taskDate }} </span>
-                            <span class="task-end-date"> {{ taskComplete.taskEndDate }} </span>
+                            <div class="t-d">
+                                <div class="span-date">
+                                    <span class="task-d"> Created In: {{ taskComplete.taskDate }} </span>
+                                    <span class="task-end-date"> Completed In: {{ taskComplete.taskEndDate }} </span>
+                                </div>
+                                <img src="../icons/info.svg">
+                            </div>
                         </div>
                         <button :data-delete="index" class="del" @click="deleteTask"> <img src="../icons/trash.svg"> </button>
                     </div>
